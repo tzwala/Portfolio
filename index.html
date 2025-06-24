@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaldarAi💡| Modern Web Apps</title>
+    
+    <!-- OPTIMIZATION 3: Load fonts without blocking page render -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- Fallback for browsers without JS -->
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
+
+    <style>
+        /* --- Global Reset & Setup --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0c29;
+            background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Animated Background Blobs --- */
+        .blob-c {
+            min-height: 100vh;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        .blob {
+            background: #4F46E5;
+            height: 250px;
+            width: 350px;
+            border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%;
+            position: absolute;
+            left: 10%;
+            top: 5%;
+            animation:-move 15s infinite alternate;
+            will-change: transform; /* OPTIMIZATION 2: GPU acceleration for smoother scrolling */
+        }
+        .blob.one{ top: 20vh; left: 60%; background: #4338CA; animation-duration: 12s; }
+        .blob.two{ top: 70vh; left: 15%; background: #A78BFA; animation-duration: 10s; }
+        .blob.three{ top: 50vh; left: 80%; background: #A78BFA; animation-duration: 8s; height: 150px; width: 200px;}
+        .blob.four{ top: 80vh; left: 50%; background: #4338CA; animation-duration: 18s; }
+        .blob.five{ top: -10vh; left: 30%; background: #4F46E5; animation-duration: 20s; }
+
+        @keyframes -move {
+          from { transform: rotate(0deg) scale(1.2) skew(1deg) }
+          to { transform: rotate(350deg) scale(0.8) skew(-5deg) }
+        }
+
+        /* --- Main Content Container --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0.5rem auto 0;
+            opacity: 0.8;
+        }
+
+        /* --- Website Grid Layout --- */
+        .website-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* --- GlassMorphism Card Style --- */
+        .website-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+            overflow: hidden;
+            will-change: transform; /* OPTIMIZATION 2: GPU acceleration for smoother scrolling */
+        }
+
+        .website-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            object-position: top;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+            background-color: #302b63; /* OPTIMIZATION 4: Fallback color if image fails */
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-content p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.8;
+            margin: 0.25rem 0 0;
+            flex-grow: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: rgba(167, 139, 250, 0.2);
+            color: #d1c4e9;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .action-btn {
+            flex-grow: 1;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .action-btn.primary {
+            background-color: #4F46E5;
+        }
+        .action-btn.primary:hover {
+            background-color: #4338CA;
+        }
+        
+        .action-btn.secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .action-btn.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Footer --- */
+        .page-footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            .page-header p {
+                font-size: 1rem;
+            }
+            .container {
+                padding: 3rem 1.5rem;
+            }
+            .website-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blob-c">
+        <div class="blob"></div>
+        <div class="blob one"></div>
+        <div class="blob two"></div>
+        <div class="blob three"></div>
+        <div class="blob four"></div>
+        <div class="blob five"></div>
+    </div>
+
+    <main class="container">
+        <header class="page-header">
+            <h1>HaldarAi💡 Web Creations</h1>
+            <p>A collection of modern web applications, built with passion and code.</p>
+        </header>
+
+        <section class="website-grid">
+            
+            <!-- Card 1: HTML Max Editor -->
+            <div class="website-card">
+                <!-- OPTIMIZATION 1: Lazy load images -->
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="HTML Max Editor Preview" class="card-image">
+                <div class="card-content">
+                    <h3>HTML Max Editor</h3>
+                    <p>A powerful, live code editor for rapid web development and prototyping.</p>
+                    <div class="card-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://html-max-editor.vercel.app" target="_blank" class="action-btn primary">Live Demo</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Question Solver AI -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Question Solver AI Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Question Solver AI</h3>
+                    <p>Get instant, AI-powered solutions to complex questions and problems.</p>
+                    <div class="card-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">API</span>
+                        <span class="tag">React</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://questionsolverai.vercel.app" target="_blank" class="action-btn primary">Try Now</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Remove BG Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Remove BG Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Remove BG Wala</h3>
+                    <p>One-click tool to automatically remove the background from any image.</p>
+                     <div class="card-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Image Processing</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://removebgwala.vercel.app" target="_blank" class="action-btn primary">Live Demo</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Player Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Player Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Player Wala</h3>
+                    <p>A sleek and modern media player interface with advanced controls.</p>
+                     <div class="card-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">UI/UX</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://playerwala.vercel.app" target="_blank" class="action-btn primary">Live Demo</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Source Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Source Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Source Wala</h3>
+                    <p>A utility for developers to easily view the source code of any website.</p>
+                    <div class="card-tags">
+                        <span class="tag">Tool</span>
+                        <span class="tag">Developer</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://sourcewala.vercel.app" target="_blank" class="action-btn primary">Try Now</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: IPTV Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="IPTV Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>IPTV Wala</h3>
+                    <p>A platform for streaming live television channels and media content.</p>
+                    <div class="card-tags">
+                        <span class="tag">Streaming</span>
+                        <span class="tag">Media</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://iptvwala.vercel.app" target="_blank" class="action-btn primary">Live Demo</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 7: Hosting Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Hosting Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Hosting Wala</h3>
+                    <p>A modern and clean portal UI for a web hosting service.</p>
+                    <div class="card-tags">
+                        <span class="tag">UI/UX</span>
+                        <span class="tag">Service</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://hostingwala.vercel.app" target="_blank" class="action-btn primary">Live Demo</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 8: Radio Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Radio Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Radio Wala</h3>
+                    <p>Listen to online radio streams from around the world in one place.</p>
+                    <div class="card-tags">
+                        <span class="tag">Streaming</span>
+                        <span class="tag">Audio</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://radiowala.vercel.app" target="_blank" class="action-btn primary">Listen Live</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 9: Haldar AI -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Haldar AI Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Haldar AI</h3>
+                    <p>Your personalized AI assistant for a variety of tasks and queries.</p>
+                    <div class="card-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Assistant</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://haldarai.vercel.app" target="_blank" class="action-btn primary">Try Now</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 10: Happy Diwali 2025 -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Happy Diwali 2025 Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Happy Diwali 2025</h3>
+                    <p>A beautiful, animated website to share festive greetings for Diwali.</p>
+                    <div class="card-tags">
+                        <span class="tag">Event</span>
+                        <span class="tag">Animation</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://happydiwali-2025.vercel.app" target="_blank" class="action-btn primary">View Greetings</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 11: Coding Master AI -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Coding Master AI Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Coding Master AI</h3>
+                    <p>An AI-powered tool for code assistance, learning, and optimization.</p>
+                    <div class="card-tags">
+                        <span class="tag">AI</span>
+                        <span class="tag">Developer Tool</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://coadingmasterai.vercel.app" target="_blank" class="action-btn primary">Try Now</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 12: Internet Check -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Internet Check Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Internet Check</h3>
+                    <p>A simple and fast tool to check your current network speed and status.</p>
+                    <div class="card-tags">
+                        <span class="tag">Tool</span>
+                        <span class="tag">Network</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://internetcheck.vercel.app" target="_blank" class="action-btn primary">Check Speed</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 13: Battery Wala -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Battery Wala Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Battery Wala</h3>
+                    <p>Instantly check your device's battery status with this web utility.</p>
+                    <div class="card-tags">
+                        <span class="tag">Tool</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">API</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://battery-wala.vercel.app" target="_blank" class="action-btn primary">Check Status</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 14: Subh2 Tool -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="Subh2 Tool Preview" class="card-image">
+                <div class="card-content">
+                    <h3>Subh2 Tool</h3>
+                    <p>A personal collection of useful and miscellaneous web utilities.</p>
+                    <div class="card-tags">
+                        <span class="tag">Toolbox</span>
+                        <span class="tag">Utilities</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://subh2tool.vercel.app" target="_blank" class="action-btn primary">Use Tools</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 15: TZ Pro APKs -->
+            <div class="website-card">
+                <img loading="lazy" src="REPLACE_THIS_WITH_YOUR_SCREENSHOT_LINK" alt="TZ Pro APKs Preview" class="card-image">
+                <div class="card-content">
+                    <h3>TZ Pro APKs</h3>
+                    <p>A platform to discover, download, and share Android applications.</p>
+                    <div class="card-tags">
+                        <span class="tag">App Store</span>
+                        <span class="tag">Android</span>
+                        <span class="tag">Community</span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://tzproapks.vercel.app" target="_blank" class="action-btn primary">Visit Site</a>
+                        <a href="#" target="_blank" class="action-btn secondary">View Source</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="page-footer">
+            <p>© 2025 HaldarAi. All rights reserved.</p>
+        </footer>
+    </main>
+
+</body>
+</html>
