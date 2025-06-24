@@ -1,0 +1,60 @@
+<!-- Fully Customizable Popup Code by AI -->
+<style>
+:root{--primary-color:#0084FF;--blur-amount:8px;}
+.popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:1000;padding:20px;box-sizing:border-box;background-color:rgba(30,30,30,.5);backdrop-filter:blur(var(--blur-amount));-webkit-backdrop-filter:blur(var(--blur-amount));opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;cursor:pointer}
+.popup-overlay.show{opacity:1;visibility:visible}
+.popup-content{width:100%;max-width:380px;position:relative;transform:scale(.9);transition:transform .3s cubic-bezier(.25,.46,.45,.94);pointer-events:none}
+.popup-overlay.show .popup-content{transform:scale(1)}
+.popup-close{position:absolute;top:-10px;right:-10px;width:36px;height:36px;background:#fff;border:none;border-radius:50%;font-size:24px;line-height:36px;color:#555;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,.2);transition:all .2s ease;z-index:10;pointer-events:auto}
+.popup-close:hover{transform:scale(1.1) rotate(90deg)}
+.popup-main-box{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.2)}
+.popup-header{display:flex;align-items:center;padding:12px 16px;gap:12px}
+.popup-logo{width:48px;height:48px;border-radius:8px;flex-shrink:0}
+.popup-header-text{text-align:left}
+.popup-header-text .brand-name{font-family:'Roboto',sans-serif;font-size:18px;font-weight:700;color:#222;margin:0}
+.popup-header-text .offer-subtitle{font-family:'Roboto',sans-serif;font-size:13px;color:#555;margin:2px 0 0;text-transform:uppercase;font-weight:700}
+.popup-banner-image{width:100%;display:block}
+.popup-cta{display:block;text-align:center;text-decoration:none;background-color:var(--primary-color);color:#fff;width:100%;padding:16px 20px;border-radius:12px;font-family:'Teko',sans-serif;font-size:24px;font-weight:600;margin-top:16px;box-sizing:border-box;box-shadow:0 4px 10px rgba(0,132,255,.4)}
+@media (max-width:600px){.popup-close{top:5px;right:5px;width:32px;height:32px;line-height:32px;font-size:20px;background-color:rgba(255,255,255,.9)}
+.popup-cta{font-size:20px;padding:14px 18px}
+.popup-header-text .brand-name{font-size:16px}
+.popup-header-text .offer-subtitle{font-size:12px}
+.popup-header{padding:10px 14px;gap:10px}
+.popup-logo{width:40px;height:40px}}
+</style>
+<div class="popup-overlay" id="bonusPopup">
+  <div class="popup-content">
+    <button class="popup-close" id="popupCloseBtn">&times;</button>
+    <div class="popup-main-box">
+        <div class="popup-header">
+            <img src="" alt="Logo" class="popup-logo" id="popupLogo">
+            <div class="popup-header-text">
+                <p class="brand-name" id="brandName"></p>
+                <p class="offer-subtitle" id="offerSubtitle"></p>
+            </div>
+        </div>
+        <img src="" alt="Bonus" class="popup-banner-image" id="mainBanner">
+    </div>
+    <div class="popup-cta" id="ctaButton"></div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+    // === CONTROL PANEL ===
+    const popupConfig={
+        logoImage:"https://i.ibb.co/qD4xS9N/4rabet-logo.png",
+        mainImageOrGif:"https://i.ibb.co/wJvB8Z1/4rabet-banner.png",
+        brandName:"💰 4RABET",
+        offerSubtitle:"Welcome Pack Bonus up to 700%",
+        ctaButtonText:"Take Bonus Now",
+        targetUrl:"https://example.com",
+        reappearIntervalSeconds: 10 // <-- MAINE ISE 10 SECONDS KAR DIYA HAI. AAP ISE BADAL SAKTE HAIN.
+    };
+    // === End of Control Panel ===
+    
+    const bonusPopup=document.getElementById('bonusPopup');const closeButton=document.getElementById('popupCloseBtn');function applyConfig(){document.getElementById('popupLogo').src=popupConfig.logoImage;document.getElementById('mainBanner').src=popupConfig.mainImageOrGif;document.getElementById('brandName').innerHTML=popupConfig.brandName;document.getElementById('offerSubtitle').innerHTML=popupConfig.offerSubtitle;document.getElementById('ctaButton').innerHTML=popupConfig.ctaButtonText;}
+function showPopup(){bonusPopup.classList.add('show')}
+function hidePopup(){bonusPopup.classList.remove('show')}
+applyConfig();setInterval(showPopup,popupConfig.reappearIntervalSeconds*1000);closeButton.addEventListener('click',e=>{e.stopPropagation();hidePopup();});bonusPopup.addEventListener('click',()=>{window.open(popupConfig.targetUrl,'_blank');hidePopup();});});
+</script>
+<!-- End of Popup Code -->
